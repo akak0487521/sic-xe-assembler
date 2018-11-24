@@ -12,7 +12,7 @@ A simple SIC/XE assembler written in C. (Not Finished)
     ./sic_xe filename
 ```
 
-## To DO List
+## TO DO LIST
 * Pass one
     * Read file (Finished)
     * Read line in file (Finished)
