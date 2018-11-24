@@ -2,17 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DELIMITER " \n\r\t"
-#define LINE_SIZE 256
-#define TOKEN_NUM 4
+#include "input_handler.h"
 
-char **split_line(char *);
-
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
     FILE *fp;
     char line[LINE_SIZE];
     char **line_tokens;
+    int count_tokens;
     
     int LOCCTR = 0;
     
@@ -30,11 +27,13 @@ int main(int argc, char *argv[])
     /******** Read line test ********/
     while (fgets(line, LINE_SIZE, fp)) {
         line_tokens = split_line(line);
+        count_tokens = get_count_tokens(line_tokens);
         
-        for (int i = 0; i < TOKEN_NUM; i++) {
-            if (line_tokens[i]) printf("%s\t\t", line_tokens[i]);
+        if (count_tokens) printf("%-4d", count_tokens);
+        for (int i = 0; i < count_tokens; i++) {
+            printf("%-16s", line_tokens[i]);
         }
-        printf("\n");
+        if (count_tokens) printf("\n");
         
         /****************************************************
          *  read first input line                           *
@@ -47,7 +46,7 @@ int main(int argc, char *argv[])
          *      end {if START}                              *
          *  else                                            *
          *      initialize LOCCTR to 0                      *
-        *****************************************************/
+         ****************************************************/
     }
     
     free(line_tokens);
@@ -55,24 +54,4 @@ int main(int argc, char *argv[])
     fclose(fp);
     
     return 0;
-}
-
-char **split_line(char *line)
-{
-    char **line_tokens = calloc(5, sizeof(char *));
-    char *token;
-    
-    if (!line_tokens) {
-        fprintf(stderr, "Memory allocation error!");
-        exit(EXIT_FAILURE);
-    }
-    
-    token = strtok(line, DELIMITER);
-    for (int i = 0; i < TOKEN_NUM; i++) {
-        if (token == NULL) break;
-        line_tokens[i] = token;
-        token = strtok(NULL, DELIMITER);
-    }
-    
-    return line_tokens;
 }
