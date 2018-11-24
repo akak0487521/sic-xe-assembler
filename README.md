@@ -17,7 +17,7 @@ A simple SIC/XE assembler written in C. (Not Finished)
     * Read file (Finished)
     * Read line in file (Finished)
     * Split line (Finished)
-    * Insert (LABEL, LOCCTTR) into SYMTAB
+    * Insert (LABEL, LOCCTR) into SYMTAB
     * Search OPTAB for OPCODE
     * ......
 * Pass two
