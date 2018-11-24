@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     char **line_tokens;
     int count_tokens;
     
-    int LOCCTR = 0;
+    //int LOCCTR = 0;
     
     if (!argv[1]) {
         fprintf(stderr, "usage: %s filename\n", argv[0]);
