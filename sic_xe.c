@@ -47,9 +47,9 @@ int main(int argc, char **argv)
          *  else                                            *
          *      initialize LOCCTR to 0                      *
          ****************************************************/
+        
+        free(line_tokens);
     }
-    
-    free(line_tokens);
     
     fclose(fp);
     
