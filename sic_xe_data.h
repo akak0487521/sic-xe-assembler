@@ -1,6 +1,14 @@
 #ifndef SIC_XE_DATA_H
 #define SIC_XE_DATA_H
 
+#define BLOCK_SIZE 16
+
+typedef struct LineStruct {
+    char label[BLOCK_SIZE];
+    char opcode[BLOCK_SIZE];
+    char operand[BLOCK_SIZE];
+} LineStruct;
+
 typedef struct SymbolTable {
     char *label;
     int LOCCTR;
