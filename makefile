@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall
 TARGET = sic_xe
+CFLAGS = -g -Wall
 SRC_FILES = $(wildcard *.c)
 OBJS = ${SRC_FILES:.c=.o}
 
