@@ -72,14 +72,31 @@ int main(int argc, char **argv)
         split_line(line, line_tokens);
         count_tokens = get_count_tokens(line_tokens);
         
-        /******** Output test ********/
         if (count_tokens) {
-            printf("%-4d", count_tokens);
-            for (int i = 0; i < count_tokens; i++) {
-                printf("%-16s", line_tokens[i]);
-            }
+            int temp_LOCCTR = LOCCTR;
+            
+            line_struct = get_line_struct(count_tokens, line_tokens, &LOCCTR);
+            
+            /******** Output test ********/
+            if (strcmp(line_struct.opcode, "END"))
+                printf("%-4d %-6X ", count_tokens, temp_LOCCTR);
+            else
+                printf("%-4d %-6s ", count_tokens, "");
+            
+            printf("%-12s", line_struct.label);
+            printf("%-12s", line_struct.opcode);
+            printf("%-12s", line_struct.operand);
+            
             printf("\n");
+            
+            //if (line_struct.label) {
+            //    SYMTAB = insert_SYMTAB(line_struct.label, temp_LOCCTR);
+            //}
+            
         }
+        
+        write_intermediate_file(intermediate_file_ptr, line_struct);
+        
     }
     
     free(line_tokens);
