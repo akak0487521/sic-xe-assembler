@@ -25,27 +25,20 @@ LineStruct get_line_struct(int count_tokens, char **line_tokens, int *LOCCTR)
     {
         case 1:
             // Label: X, Opcode: O, Operand: X
-            if (is_in_OPTAB(line_tokens[0], &index)) {
-                strcpy(temp.opcode, line_tokens[0]);
-            }
+            strcpy(temp.opcode, line_tokens[0]);
             break;
         case 2:
-            // Label: X, Opcode: O, Operand: O
-            if (is_in_OPTAB(line_tokens[0], &index) ||
-                (strcmp(line_tokens[0], "WORD") == 0) ||
-                (strcmp(line_tokens[0], "RESW") == 0) ||
-                (strcmp(line_tokens[0], "BYTE") == 0) ||
-                (strcmp(line_tokens[0], "RESB") == 0) ||
-                (strcmp(line_tokens[0], "END") == 0))
-            {
-                strcpy(temp.opcode, line_tokens[0]);
-                strcpy(temp.operand, line_tokens[1]);
-            }
             // Label: O, Opcode: O, Operand: X
-            else
+            if (is_in_OPTAB(line_tokens[1], &index))
             {
                 strcpy(temp.label, line_tokens[0]);
                 strcpy(temp.opcode, line_tokens[1]);
+            }
+            // Label: X, Opcode: O, Operand: O
+            else
+            {
+                strcpy(temp.opcode, line_tokens[0]);
+                strcpy(temp.operand, line_tokens[1]);
             }
             break;
         case 3:
@@ -53,14 +46,15 @@ LineStruct get_line_struct(int count_tokens, char **line_tokens, int *LOCCTR)
             strcpy(temp.label, line_tokens[0]);
             strcpy(temp.opcode, line_tokens[1]);
             strcpy(temp.operand, line_tokens[2]);
-            //Get index of OPTAB
-            is_in_OPTAB(temp.opcode, &index);
+            break;
         default:
             break;
     }
     
-    if (index != -1) {
+    if (is_in_OPTAB(temp.opcode, &index)) {
         *LOCCTR += OPTAB[index].format - '0';
+    } else if (temp.opcode[0] == '+') {
+        *LOCCTR += 4;
     } else if (strcmp(temp.opcode, "WORD") == 0) {
         *LOCCTR += 3;
     } else if (strcmp(temp.opcode, "RESW") == 0) {

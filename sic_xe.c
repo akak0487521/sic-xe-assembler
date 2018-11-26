@@ -79,7 +79,7 @@ int main(int argc, char **argv)
             
             /******** Output test ********/
             if (strcmp(line_struct.opcode, "END"))
-                printf("%-4d %-6X ", count_tokens, temp_LOCCTR);
+                printf("%-4d %04X   ", count_tokens, temp_LOCCTR);
             else
                 printf("%-4d %-6s ", count_tokens, "");
             
