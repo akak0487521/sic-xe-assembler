@@ -5,7 +5,7 @@
 #define LINE_SIZE 256
 #define TOKEN_NUM 3
 
-char **split_line(char *);
+void split_line(char *, char **);
 int get_count_tokens(char **);
 
 #endif

@@ -4,15 +4,9 @@
 
 #include "input_handler.h"
 
-char **split_line(char *line)
+void split_line(char *line, char **line_tokens)
 {
-    char **line_tokens = calloc(5, sizeof(char *));
     char *token;
-    
-    if (!line_tokens) {
-        fprintf(stderr, "Memory allocation error!");
-        exit(EXIT_FAILURE);
-    }
     
     token = strtok(line, DELIMITER);
     for (int i = 0; i < TOKEN_NUM; i++) {
@@ -20,8 +14,6 @@ char **split_line(char *line)
         line_tokens[i] = token;
         token = strtok(NULL, DELIMITER);
     }
-    
-    return line_tokens;
 }
 
 int get_count_tokens(char **line_tokens)
