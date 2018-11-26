@@ -18,6 +18,7 @@ A simple SIC/XE assembler written in C. (Not Finished)
     * Read line from file (Finished)
     * Split line (Finished)
     * Write line to intermediate file (Finished)
+    * Check duplicate symbol
     * Insert (LABEL, LOCCTR) into SYMTAB
     * Search OPTAB for OPCODE
         * O(n) (Finished)
