@@ -6,14 +6,16 @@
 
 void split_line(char *line, char **line_tokens)
 {
+    int i;
     char *token;
     
     token = strtok(line, DELIMITER);
-    for (int i = 0; i < TOKEN_NUM; i++) {
+    for (i = 0; i < TOKEN_NUM; i++) {
         if (token == NULL) break;
         line_tokens[i] = token;
         token = strtok(NULL, DELIMITER);
     }
+    line_tokens[i] = NULL;
 }
 
 int get_count_tokens(char **line_tokens)
