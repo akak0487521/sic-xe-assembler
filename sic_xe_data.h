@@ -1,6 +1,7 @@
 #ifndef SIC_XE_DATA_H
 #define SIC_XE_DATA_H
 
+#define SYMTAB_SIZE 32
 #define BLOCK_SIZE 16
 
 typedef struct LineStruct {
@@ -10,7 +11,7 @@ typedef struct LineStruct {
 } LineStruct;
 
 typedef struct SymbolTable {
-    char *label;
+    char label[BLOCK_SIZE];
     int LOCCTR;
 } SymTab;
 

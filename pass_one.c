@@ -51,7 +51,7 @@ LineStruct get_line_struct(int count_tokens, char **line_tokens, int *LOCCTR)
             break;
     }
     
-    if (is_in_OPTAB(temp.opcode, &index)) {
+    if (index != -1 || is_in_OPTAB(temp.opcode, &index)) {
         *LOCCTR += OPTAB[index].format - '0';
     } else if (temp.opcode[0] == '+') {
         *LOCCTR += 4;
@@ -69,6 +69,21 @@ LineStruct get_line_struct(int count_tokens, char **line_tokens, int *LOCCTR)
     }
     
     return temp;
+}
+
+void insert_SYMTAB(SymTab *SYMTAB, int *sym_num, char *label, int LOCCTR)
+{
+    for (int i = 0; i < *sym_num; i++) {
+        if (strcmp(SYMTAB[i].label, label) == 0) {
+            fprintf(stderr, "Duplicate symbol. (%s at SYMTAB[%d])\n", SYMTAB[i].label, i);
+            exit(EXIT_FAILURE);
+        }
+    }
+    if ( (*sym_num) + 1 < SYMTAB_SIZE ) {
+        strcpy(SYMTAB[*sym_num].label, label);
+        SYMTAB[*sym_num].LOCCTR = LOCCTR;
+        *sym_num += 1;
+    }
 }
 
 void write_intermediate_file(FILE *intermediate_file_ptr, LineStruct line_struct)

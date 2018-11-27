@@ -15,6 +15,8 @@ int main(int argc, char **argv)
     int count_tokens;
     
     LineStruct line_struct;
+    SymTab SYMTAB[SYMTAB_SIZE] = {};
+    int sym_num = 0;
     int starting_address = 0;
     int LOCCTR = 0;
     
@@ -54,6 +56,14 @@ int main(int argc, char **argv)
             strcpy(line_struct.opcode, line_tokens[1]);
             strcpy(line_struct.operand, line_tokens[2]);
             
+            
+            /******** First Line Output (test) ********/
+            printf("%04X   ", starting_address);
+            printf("%-12s", line_tokens[0]);
+            printf("%-12s", line_tokens[1]);
+            printf("%-12s\n", line_tokens[2]);
+            
+            
             // Write line to intermediate file
             write_intermediate_file(intermediate_file_ptr, line_struct);
             
@@ -64,6 +74,7 @@ int main(int argc, char **argv)
         
         // Initialize LOCCTR to starting address
         LOCCTR = starting_address;
+        
     }
     
     /******** Read input line ********/
@@ -77,27 +88,38 @@ int main(int argc, char **argv)
             
             line_struct = get_line_struct(count_tokens, line_tokens, &LOCCTR);
             
-            /******** Output test ********/
+            if (strcmp(line_struct.label, "")) {
+                insert_SYMTAB(SYMTAB, &sym_num, line_struct.label, temp_LOCCTR);
+            }
+            
+            
+            /******** Line Output (test) ********/
             if (strcmp(line_struct.opcode, "END"))
-                printf("%-4d %04X   ", count_tokens, temp_LOCCTR);
+                printf("%04X   ", temp_LOCCTR);
             else
-                printf("%-4d %-6s ", count_tokens, "");
+                printf("%-6s ", "");
             
             printf("%-12s", line_struct.label);
             printf("%-12s", line_struct.opcode);
-            printf("%-12s", line_struct.operand);
+            printf("%-12s\n", line_struct.operand);
             
-            printf("\n");
-            
-            //if (line_struct.label) {
-            //    SYMTAB = insert_SYMTAB(line_struct.label, temp_LOCCTR);
-            //}
             
         }
         
         write_intermediate_file(intermediate_file_ptr, line_struct);
         
     }
+    
+    
+    //******** SYMTAB Output (test) ********/
+    printf("--------------------------------------");
+    printf("\n\t\tSYMTAB\n\n");
+    for (int i = 0; i < sym_num; i++) {
+        printf("        %-10s\t%04X\n", SYMTAB[i].label, SYMTAB[i].LOCCTR);
+    }
+    printf("\n");
+    printf("--------------------------------------\n");
+    
     
     free(line_tokens);
     
